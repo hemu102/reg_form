@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="regform.css">
+    <title>REGISTATION FORM</title>
+ </head> 
+ <body>
+    <section>
+        <div class="intake" id="intake">
+            <h1 class="title" id="title">ENROLMENT FORM</h1>
+            <form class="form">
+              <div class="inbox">
+                <div>
+                <input type="text" class="input" name="name" id="name" placeholder=" "><label for="name" class="placeholder">NAME</label></div>
+                <div>
+                <input type="email" class="input"  name="email" id="email" placeholder=" "><label for="email" class="placeholder">EMAIL</label></div>
+                <input type="file" class="image"  name="img" id="img">
+                </div>
+                
+                <div class="gender">
+                  <p>GENDER</p>
+                <input class="m" type="radio" name="gen" value="Male" id="m" checked><label for="m">Male</label>
+                <input class="f" type="radio" name="gen" value="Female" id="f"><label for="f">Female</label>
+                </div>
+
+                <div class="skills">
+                  <p>SKILLS</p>
+                <input type="checkbox" name="html"  value="html" id="html"><label for="html">HTML</label>
+                <input type="checkbox" name="css" value="css" id="css"><label for="css">CSS</label>
+                <input type="checkbox" name="js" value="js" id="js"><label for="js">JAVA SCRIPT</label>
+                </div>
+
+                <p class="note">
+                    please enter valid information...
+                </p>
+              
+              <div class="sub">
+              <input type="button" id="submit" value="submit" onclick="enroll()">
+              <input type="button" id="clear" onclick="clear()" >
+              </div>
+             </form>
+
+        </div>
+        <div class="display" id="display">
+            
+                <h1 class="title">DISPLAY</h1>
+               
+
+        </div>
+     </section>
+     <script>
+         const Name = document.getElementById("name");
+         const Email=document.getElementById("email");
+         const Img = document.getElementById("img");
+        
+         var uploaded_image="";
+         Img.addEventListener("change", function() {
+        
+            const reader = new FileReader();
+            reader.addEventListener("load", () => {
+              uploaded_image = reader.result;
+              document.getElementById("dis").style.backgroundImage = `url(${uploaded_image})`;
+             });
+             reader.readAsDataURL(this.files[0]);
+          });
+         function enroll(){
+            if(Name.value && Email.value){
+            var card=document.createElement('div');
+            card.classList.add('card');
+            document.getElementById("display").appendChild(card);
+            var details=document.createElement('div');
+            details.classList.add('details');
+            card.appendChild(details);
+            var name=document.createElement('div');
+            name.classList.add('d_name');
+            name.innerHTML=Name.value;
+            Name.value="";
+            details.appendChild(name);
+            var email=document.createElement('div');
+            email.innerHTML=Email.value;
+            email.classList.add('d_email');
+            details.appendChild(email);
+            var gender=document.createElement('div');
+            gender.classList.add('d_gender');
+            if(document.getElementById("m").checked){
+                gender.innerHTML="Male";
+            }
+            else{
+                gender.innerHTML="Female";
+                
+            }
+            details.appendChild(gender);
+            var skill=document.createElement('div');
+            skill.classList.add('d_skills');
+            if(document.getElementById("html").checked){
+                
+                skill.innerHTML="HTML";
+
+            }
+            if(document.getElementById("css").checked){
+                
+                skill.innerHTML+="  CSS";
+            }
+            if(document.getElementById("js").checked){
+                
+                skill.innerHTML+="  JAVA SCRIPT";
+            }
+            details.appendChild(skill);
+            var img = document.createElement("div");
+            img.classList.add("d_img");
+            if(Img.value!=""){
+            img.style.backgroundImage= `url(${uploaded_image})`;}
+            card.appendChild(img);
+            document.getElementById("display").appendChild(card);    
+            document.querySelector(".note").style.opacity=0;
+            clear();
+         }
+         else{
+            document.querySelector(".note").style.opacity=1;
+         }
+         }
+         function clear(){
+            Name.value="";
+            Email.value="";
+            Img.value="";
+            document.getElementById("m").checked=1;
+            document.getElementById("html").checked=0;
+            document.getElementById("css").checked=0;
+            document.getElementById("js").checked=0;
+         }
+    </script>
+</body>
+</html>
